@@ -1,0 +1,32 @@
+name: Update gh-pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-gh-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install  # or use the appropriate command for your project
+
+      - name: Build project
+        run: npm run build  # or use the appropriate command for your project
+
+      - name: Deploy to gh-pages
+        run: |
+          git checkout gh-pages
+          git pull origin gh-pages
+          git merge main
+          git push origin gh-pages
